@@ -1,0 +1,122 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
+public class graph <Thing>{
+	Node<Thing> nodee ;
+	ArrayList<Node> nodes;
+	ArrayList<LinkedList<Node>> alist;
+	int matrix[][];
+	
+	public graph(int x) {
+		alist = new ArrayList<>();
+		nodes = new ArrayList<>();
+		this.matrix = new int[x][x];
+	}
+	public void addNode(Thing X) {
+		LinkedList<Node> curlist = new LinkedList<Node>();
+		nodee = new Node<>(X);
+		curlist.add(nodee);
+		alist.add(curlist);
+      nodes.add(nodee);
+	}
+	public void addEdge(int src, int dst) {
+		Node dstNode = alist.get(dst).get(0);
+		alist.get(src).add(dstNode);
+matrix[src][dst] = 1;
+	}
+	public boolean checkEdge(int src, int dst) {
+		return matrix[src][dst] == 1;
+
+	}
+	public boolean checkEdgeadj(int src, int dst) {
+		Node dstNode = alist.get(dst).get(0);
+    
+      for(Node node : alist.get(src)) {
+    	  if(node == dstNode) return true;
+      }
+      return false;
+	}
+	public void print() {
+		System.out.print("  ");
+		for(Node NODE :  nodes) {
+			System.out.print(NODE.data+" ");
+		}
+		System.out.println();
+for(int i = 0; i<matrix.length; i++) {
+	System.out.print(nodes.get(i).data+" ");
+	for(int j = 0; j<matrix[i].length; j++) {
+		System.out.print(matrix[i][j]+" ");
+	}
+	System.out.println();
+}
+	}
+	
+public void depathfirstsearch(int index){
+	boolean[] visted  = new boolean[matrix.length];
+	
+	dfsHelper(index, visted);
+	
+}
+private void dfsHelper(int index, boolean[] visted) {
+if(visted[index]) return;
+else {
+	visted[index] = true;
+	System.out.println(nodes.get(index).data+ " Visted");
+}
+for(int i = 0 ; i<matrix[index].length; i++) {
+	if(matrix[index][i] == 1) {
+		dfsHelper(i, visted);
+	}
+}
+
+return;
+}
+public void BFS(int index) {
+	boolean[] visted  = new boolean[matrix.length];
+	Queue<Integer> queue = new LinkedList<>();
+
+	queue.offer(index);
+	visted[index] = true;
+	while(!queue.isEmpty()) {
+		
+		index = queue.poll();
+		System.out.println(nodes.get(index).data+ " visted");
+		for(int i = 0 ; i<matrix[index].length; i++) {
+			if(matrix[index][i] == 1 && !visted[i]) {
+				queue.offer(i);
+				visted[i] = true;
+			}
+		}
+		
+	}
+}
+public void depathfirstsearchv2(int index) {
+	boolean[] visted  = new boolean[matrix.length];
+	Stack<Integer> stack = new Stack<>();
+
+	stack.push(index);
+	visted[index] = true;
+	while(!stack.isEmpty()) {
+		
+		index = stack.pop();
+		System.out.println(nodes.get(index).data+ " visted");
+		for(int i = 0 ; i<matrix[index].length; i++) {
+			if(matrix[index][i] == 1 && !visted[i]) {
+				stack.push(i);
+				visted[i] = true;
+			}
+		}
+		
+	}
+}
+public void printadj() {
+	for(LinkedList<Node> cur : alist) {
+		for(Node node : cur) {
+			System.out.print(node.data+ " -> ");
+		}
+		System.out.println();
+	}
+}
+}
