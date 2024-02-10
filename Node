@@ -1,0 +1,10 @@
+
+public  class  Node <Thing> {
+	Thing data;
+
+	Node(Thing thing){
+		this.data = thing;
+	}
+
+
+}
